@@ -1,0 +1,4 @@
+#Sat Feb 02 10:42:28 PST 2019
+base.0=C\:\\Users\\Lam\\Documents\\Ride-Share\\RideShare\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex

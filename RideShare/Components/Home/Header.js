@@ -12,7 +12,6 @@ export  default class Header extends Component {
 
 const styles = StyleSheet.create({
     header: {
-        
         fontSize: 50,
         color: 'white',
         textAlign: 'center'
