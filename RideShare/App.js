@@ -10,15 +10,23 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Header from './Components/Home/Header';
+import SignIn from './Components/Home/SignIn';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import HomeScreen from './Components/Home/HomeScreen';
 export default class App extends Component {
+
   render() {
     return (
-      <View style={styles.container}>
-        <Header />
-      </View>
+      <AppContainer />
     );
   }
 }
+
+const AppStackNavigator = createStackNavigator({
+  Home: HomeScreen
+}   );
+
+const AppContainer = createAppContainer(AppStackNavigator);
 
 const styles = StyleSheet.create({
   container: {
