@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import Header from './Header';
 import SignIn from './SignIn';
+import ForgotPass from './ForgotPassword';
+
 export default class HomeScreen extends Component {
   static navigationOptions = {
     headerStyle: {
@@ -24,6 +26,7 @@ export default class HomeScreen extends Component {
                 <Header />
                 <SignIn signIn={this.signIn}/>
                 <TouchableOpacity style={styles.signUp} underlayColor="white" onPress={() => this.props.navigation.navigate('Sign')}><Text>Don't have an account? Sign up here!</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.signUp} underlayColor="white" onPress={() => this.props.navigation.navigate('ForgotPass')}><Text>Forgot Password? Click here!</Text></TouchableOpacity>
             </View>
         );
     }
