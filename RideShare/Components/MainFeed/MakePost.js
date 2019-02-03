@@ -13,8 +13,10 @@ import {
   KeyboardAvoidingView,
   Switch,
   Alert,
-  AppRegistry
+  AppRegistry,
+  DatePickerAndroid
 } from "react-native";
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 export default class MakePost extends Component {
   constructor(props) {
@@ -23,10 +25,11 @@ export default class MakePost extends Component {
       toggle: false, //make true / false determine which type of ride.
       Starting: "",
       Destination: "",
-      Date: "",
+      Date: null,
       Time: "",
       Price: "",
-      formIsEmpty: false
+      formIsEmpty: false,
+      isDateTimePickerVisible: false
     };
   }
 
@@ -35,6 +38,30 @@ export default class MakePost extends Component {
     this.setState({ toggle: newState });
   }
 
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+ 
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+ 
+  _handleDatePicked = (date) => {
+    console.log('A date has been picked: ', date);
+    this._hideDateTimePicker();
+  };
+  
+  async openDate(e) {
+      try {
+      const {action, year, month, day} = await DatePickerAndroid.open({
+        // Use `new Date()` for current date.
+        // May 25 2020. Month 0 is January.
+        date: new Date(2020, 4, 25)
+      });
+      if (action !== DatePickerAndroid.dismissedAction) {
+        // Selected year, month (0-11), day
+        this.setState({Date: new Date(year, month, day)});
+      }
+    } catch ({code, message}) {
+      console.warn('Cannot open date picker', message);
+    }
+  }
   render() {
     const { toggle } = this.state;
     const colorValue = toggle ? "#D3D3D3" : "#888888";
@@ -97,7 +124,7 @@ export default class MakePost extends Component {
                 placeholder="Starting"
                 placeholderTextColor="rgba(255,255,255,0.😎"
                 autoCorrect={false}
-                onChangeText={Starting => this.setState({ Starting })}
+                onChangeText={Starting => this.setState({ Starting: Starting })}
                 value={this.state.Starting}
               />
               <TextInput
@@ -105,33 +132,28 @@ export default class MakePost extends Component {
                 placeholder="Destination"
                 placeholderTextColor="rgba(255,255,255,0.😎"
                 autoCorrect={false}
-                onChangeText={Destination => this.setState({ Destination })}
+                onChangeText={Destination => this.setState({ Destination: Destination })}
                 value={this.state.Destination}
               />
-              <TextInput
-                style={styles.input2}
-                placeholder="Date"
-                placeholderTextColor="rgba(255,255,255,0.😎"
-                autoCorrect={false}
-                onChangeText={Date => this.setState({ Date })}
-                value={this.state.Date}
-              />
-              <TextInput
-                style={styles.input2}
-                placeholder="Time"
-                placeholderTextColor="rgba(255,255,255,0.😎"
-                autoCorrect={false}
-                ref={"Time"}
-                onChangeText={Time => this.setState({ Time })}
-                value={this.state.Time}
-              />
+              <View style={{flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
+              <TouchableOpacity style={{backgroundColor: "rgb(255, 255, 255, 0.2)", padding: 10, marginVertical: 20}} onPress={this.openDate}>
+              <Text>
+                Date
+              </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={{backgroundColor: "rgb(255, 255, 255, 0.2)", padding: 10, marginVertical: 20}}>
+              <Text>
+                Time
+              </Text>
+              </TouchableOpacity>
+              </View>
               <TextInput
                 style={styles.input}
                 placeholder="Price $"
                 placeholderTextColor="rgba(255,255,255,0.😎"
                 autoCorrect={false}
                 ref={"Price"}
-                onChangeText={Price => this.setState({ Price })}
+                onChangeText={Price => this.setState({ Price: Price })}
                 value={this.state.Price}
               />
               <TouchableOpacity style={styles.buttonContainer}>
