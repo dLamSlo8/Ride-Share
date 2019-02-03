@@ -53,7 +53,7 @@ export default class SignIn extends Component {
                   onChangeText={(text) => this.setState({password: text})}
                 />
                 <TouchableOpacity style={styles.buttonContainer}>
-                  <Text style={styles.buttonText} onPress={this.props.navigation.navigate("Feed")}>SIGN IN</Text>
+                  <Text style={styles.buttonText} onPress={this.props.signIn.bind(this)}>SIGN IN</Text>
                 </TouchableOpacity>
             </View>
 

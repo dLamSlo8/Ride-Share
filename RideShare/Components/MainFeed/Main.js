@@ -28,7 +28,8 @@ export default class Main extends Component {
             color: "white",
             fontSize: 50,
             flex: 1,
-            alignSelf: "stretch",
+            flexDirection: "row",
+            justifyContent: "center"
             
             
         }

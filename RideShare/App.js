@@ -26,7 +26,6 @@ export default class App extends Component {
 
 const AppStackNavigator = createStackNavigator({
   Home: HomeScreen,
-  SignIn: SignIn,
   Post: MakePost,
   Feed: Main
 }   );
