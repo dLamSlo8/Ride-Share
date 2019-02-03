@@ -13,17 +13,38 @@ import {
   KeyboardAvoidingView,
   AppRegistry
 } from "react-native";
+import firebase from 'react-native-firebase';
 
 export default class SignIn extends Component {
   constructor(props) {
       super(props);
       this.state = {
           email: "",
-          password: ""
+          password: "",
+          err: ""
       };
+      this.ref = firebase.firestore().collection("NewUser");
   }
-
-  render() {
+  authCheck = () => {
+        this.ref.where("Email", "==", this.state.email).get()
+        .then(snapshot => {
+            if (snapshot.empty) {
+                this.setState({err: "Email or password is incorrect. Try again."});
+            }
+            else {
+                this.ref.where("Password", "==", this.state.password).get()
+                .then (snapshot2 => {
+                    if (snapshot2.empty) {
+                        this.setState({err: "Email or password is incorrect. Try again."})
+                    }
+                    else {
+                        this.props.signIn.bind(this);
+                    }
+                })
+            }
+        });
+  }
+    render() {
     return (
           <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
@@ -53,14 +74,17 @@ export default class SignIn extends Component {
                   onChangeText={(text) => this.setState({password: text})}
                 />
                 <TouchableOpacity style={styles.buttonContainer}>
-                  <Text style={styles.buttonText} onPress={this.props.signIn.bind(this)}>SIGN IN</Text>
+                  <Text style={styles.buttonText} onPress={this.authCheck}>SIGN IN</Text>
                 </TouchableOpacity>
+                <Text>{this.state.err}</Text>
             </View>
 
               </TouchableWithoutFeedback>
     );
+    }
+
   }
-}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
