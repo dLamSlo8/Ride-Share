@@ -16,6 +16,7 @@ import HomeScreen from './Components/Home/HomeScreen';
 import MakePost from './Components/MainFeed/MakePost';
 import Main from './Components/MainFeed/Main';
 import SignUp from './Components/Home/SignUp';
+import ForgotPassword from './Components/Home/ForgotPassword';
 export default class App extends Component {
 
   render() {
@@ -33,8 +34,11 @@ const AppStackNavigator = createStackNavigator({
   Feed: {
     screen: Main},
   Sign: {
-    screen: SignUp}
-}, 
+    screen: SignUp},
+  ForgotPass: {
+    screen: ForgotPassword}
+
+},
 {
   initialRouteName: "Home"
 }   );
