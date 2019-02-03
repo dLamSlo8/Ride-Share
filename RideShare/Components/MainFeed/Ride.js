@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
- import { View, TouchableOpacity, Text, AppRegistry } from 'react-native';
-
+import { View, TouchableOpacity, Text, AppRegistry } from 'react-native';
+import firebase from 'react-native-firebase';
 
  export default class Ride extends Component {
+
+   constructor(props) {
+       super(props);
+       this.state = {
+           firstName: "",
+           lastName: "",
+           phoneNumber: ""
+       };
+       this.ref = firebase.firestore().collection("NewUsers");
+       this.ref2 = firebase.firestore().collection("Rides");
+    }
    checkSeeking() {
      const formSeeking = <Text style={{color: "blue", fontWeight: "bold"}}>Seeking</Text>;
      const formOffering = <Text style={{color: "green", fontWeight: "bold"}}>Offering</Text>;
 
      let formSeekingMessage;
 
-     if (this.props.rideInfo.requesting) {
+     if (this.props.rideInfo.RideType) {
        formSeekingMessage = formSeeking;
      }
      else {
@@ -18,10 +29,9 @@ import React, { Component } from 'react';
      return formSeekingMessage;
    }
 
-
     render() {
       return(
-
+        
         <View
           style={{
             borderWidth: 1,
@@ -29,7 +39,7 @@ import React, { Component } from 'react';
             backgroundColor: "white",
             opacity: 0.8,
             width: 280,
-            height: 130,
+            height: 160,
             borderRadius: 10,
             margin: 8,
           }}
@@ -39,22 +49,22 @@ import React, { Component } from 'react';
                 margin: 8,
                 fontSize: 20,
                 fontWeight: "bold",
-              }}>{this.props.rideInfo.name}</Text>
+              }}>{this.props.rideInfo.FirstName + " " + this.props.rideInfo.LastName}</Text>
 
               <Text
                 style={{
-                  margin: 8,
-                  fontSize: 15,
+                  margin: 1,
+                  fontSize: 11,
                   position: "absolute",
                   top: 5,
-                  left: 180,
+                  left: 175,
                 }}>{this.checkSeeking()}</Text>
 
                 <Text
                   style={{
                     margin: 8,
                     fontSize: 15,
-                  }}>To: {this.props.rideInfo.end}</Text>
+                  }}>To: {this.props.rideInfo.EndingPt}</Text>
 
                   <Text
                     style={{
@@ -62,8 +72,23 @@ import React, { Component } from 'react';
                       marginTop: 3,
                       fontSize: 15,
                       top: -10,
-                    }}>From: {this.props.rideInfo.start}</Text>
+                    }}>From: {this.props.rideInfo.StartingPt}</Text>
 
+                    <Text
+                    style={{
+                      margin: 8,
+                      marginTop: 3,
+                      fontSize: 15,
+                      top: -13,
+                    }}>Phone: {this.props.rideInfo.Phone}</Text>
+
+                    <Text
+                    style={{
+                      margin: 8,
+                      marginTop: 3,
+                      fontSize: 15,
+                      top: -13,
+                    }}>Price: ${this.props.rideInfo.Price}</Text>
 
         </View>
 

@@ -6,7 +6,7 @@
  * @flow
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
-
+console.disableYellowBox = true;
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import Header from './Components/Home/Header';

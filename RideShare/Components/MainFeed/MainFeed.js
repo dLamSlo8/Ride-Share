@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, View, StyleSheet, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Ride from '../MainFeed/Ride';
+import firebase from "react-native-firebase";
 export default class HomeScreen extends Component {
   static navigationOptions = {
     headerStyle: {
@@ -10,7 +11,7 @@ export default class HomeScreen extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        rides: [
+        rideData:  [
           {name: "Kevin",
           requesting: true,
           start: "San Luis Obispo",
@@ -27,51 +28,42 @@ export default class HomeScreen extends Component {
           spotsLeft: 2}
         ]
       };
+    this.ref = firebase.firestore().collection("Rides");
+  }
+  
+  componentDidMount() {
+        console.log(this.state.rideData.length);
+        this.ref.get()
+        .then(snapshot => {
+            var rides = [];
+            snapshot.docs.forEach(doc => rides.push(doc.data()));
+            this.setState({rideData: rides});
+        });
   }
 
-
-
     render() {
-        return (
-            <View style={styles.container}>
+
+            if (this.state.rideData.length === 0) {
+                return <Text>Loading</Text>
+            }
+            else {
+            return (<View style={styles.container}>
 
               <Text
                   style={styles.mainFeedHeader}
               >College Commute</Text>
-        {/* <TouchableOpacity onPress={() => this.props.navigation.navigate("Post")}> 
-              <Text
-                  style={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: 70,
-                    position: "absolute",
-                  }}>
-              asdasd</Text></TouchableOpacity> */}
-              <Button onPress={() => this.props.navigation.navigate("Post")} title="New Post"></Button>
-              <View
-                style={{
-                  borderBottomColor: '#C0C0C0',
-                  borderBottomWidth: 1,
-                  width: "100%",
-                  position: "absolute",
-                  top: 80,
-                }}
-              />
 
-              <View
-
-              style={styles.scroller}>
-
-                {this.state.rides.map((ride) =>
-                <Ride rideInfo={ride}></Ride>)}
-
-
+              <View style={styles.scroller}>
+                {this.state.rideData.map((ride) =>
+                 <Ride rideInfo={ride}></Ride>)}
               </View>
+            <TouchableOpacity style={{position: "absolute", top: 30, right: 20}} onPress={() => this.props.navigation.navigate("Post")}>
+                <Text style={{color: "white", fontWeight: "bold", fontSize: 30}}>+ </Text>
+            </TouchableOpacity>
 
+            </View>);
 
-            </View>
-
-        );
+            }
     }
 }
 

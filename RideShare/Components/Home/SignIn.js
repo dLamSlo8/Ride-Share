@@ -26,22 +26,15 @@ export default class SignIn extends Component {
       this.ref = firebase.firestore().collection("NewUser");
   }
   authCheck = () => {
-        this.ref.where("Email", "==", this.state.email).get()
+        this.ref.where("Email", "==", this.state.email).where("Password", "==", this.state.password).get()
         .then(snapshot => {
             if (snapshot.empty) {
                 this.setState({err: "Email or password is incorrect. Try again."});
             }
             else {
-                this.ref.where("Password", "==", this.state.password).get()
-                .then (snapshot2 => {
-                    if (snapshot2.empty) {
-                        this.setState({err: "Email or password is incorrect. Try again."})
-                    }
-                    else {
-                       this.setState({err:""});
-                       this.props.signIn();
-                    }
-                })
+              this.setState({err: ""});
+                global.identifier = snapshot.docs[0].get("UserName");
+                this.props.signIn();
             }
         });
   }
@@ -51,15 +44,13 @@ export default class SignIn extends Component {
             onPress={Keyboard.dismiss}
           >
       <View>
-
                 <Image
-                style = {{resizeMode:'contain', top: 40, marginLeft: 20, width: 200}}
+                style = {{resizeMode:'contain', top: 40, marginLeft: 20, width: 300}}
 
-                source={require("../../assets/Logo1.png")}  />
-
+                source={require("../../assets/Logo2.png")}  />
                 <TextInput
                   style={styles.input}
-                  placeholder="Emil"
+                  placeholder="Email"
                   placeholderTextColor="rgba(255,255,255,0.😎"
                   autoCorrect={false}
                   value={this.state.email}

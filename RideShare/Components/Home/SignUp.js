@@ -25,6 +25,7 @@ export default class SignUp extends Component {
                   UsernameText: "",
                   PasswordText: "",
                   ReEnterPasswordText: "",
+                  PhoneNumber: "",
                   formIsEmpty: false,
                   passwordHasMismatch: false,
                   emailNonEdu: false,
@@ -65,7 +66,8 @@ export default class SignUp extends Component {
                 FirstName: this.state.FirstNameText,
                 LastName: this.state.LastNameText,
                 Password: this.state.PasswordText,
-                UserName: this.state.UsernameText
+                UserName: this.state.UsernameText,
+                Phone: this.state.PhoneNumber
               })
             }
             else {
@@ -170,6 +172,14 @@ export default class SignUp extends Component {
                   ref={"txtPassword"}
                   onChangeText = { (ReEnterPasswordText) => this.setState({ReEnterPasswordText}) }
                   value={this.state.ReEnterPasswordText}
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Phone Number"
+                  placeholderTextColor="rgba(255,255,255,0.😎"
+                  autoCorrect={false}
+                  onChangeText = { (number) => this.setState({PhoneNumber: number})}
+                  value={this.state.PhoneNumber}
                 />
                 <TouchableOpacity style={styles.buttonContainer}
                   onPress = {this.onRegisterPress.bind(this)}

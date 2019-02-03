@@ -17,6 +17,7 @@ import {
   DatePickerAndroid
 } from "react-native";
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import firebase from 'react-native-firebase';
 
 export default class MakePost extends Component {
   constructor(props) {
@@ -25,28 +26,31 @@ export default class MakePost extends Component {
       toggle: false, //make true / false determine which type of ride.
       Starting: "",
       Destination: "",
-      Date: null,
-      Time: "",
+      DateTime: null,
       Price: "",
       formIsEmpty: false,
-      isDateTimePickerVisible: false
+      isDateTimePickerVisible: false,
+      Spots: 0,
+      FirstName: "",
+      LastName: "",
+      PhoneNumber: ""
     };
+    this.ref = firebase.firestore().collection("Rides");
+    this.ref2 = firebase.firestore().collection("NewUser");
   }
 
   _onPres() {
     const newState = !this.state.toggle;
     this.setState({ toggle: newState });
   }
-
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
  
   _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
  
   _handleDatePicked = (date) => {
-    console.log('A date has been picked: ', date);
+    this.setState({DateTime: date});
     this._hideDateTimePicker();
   };
-  
   async openDate(e) {
       try {
       const {action, year, month, day} = await DatePickerAndroid.open({
@@ -56,11 +60,38 @@ export default class MakePost extends Component {
       });
       if (action !== DatePickerAndroid.dismissedAction) {
         // Selected year, month (0-11), day
-        this.setState({Date: new Date(year, month, day)});
+        this.setState({Date: new Date(year, month, day).toString()});
       }
     } catch ({code, message}) {
       console.warn('Cannot open date picker', message);
     }
+  }
+
+  createPost = () => {
+    this.ref2.where("UserName", "==", global.identifier).get()
+    .then(snapshot => {
+    const userData = snapshot.docs[0].data();
+    console.log(userData);
+    this.setState({
+    FirstName: userData.FirstName,
+    LastName: userData.LastName,
+    PhoneNumber: userData.Phone
+    });
+    this.ref.add({
+    StartingPt: this.state.Starting,
+    EndingPt: this.state.Destination,
+    Price: this.state.Price, 
+    RideType: this.state.toggle,
+    Spots: this.state.Spots,
+    UserName: global.identifier,
+    FirstName: this.state.FirstName,
+    LastName: this.state.LastName,
+    Phone: this.state.PhoneNumber,
+    Date: this.state.DateTime
+  });
+    });
+
+    this.props.navigation.navigate("Feed");
   }
   render() {
     const { toggle } = this.state;
@@ -135,28 +166,41 @@ export default class MakePost extends Component {
                 onChangeText={Destination => this.setState({ Destination: Destination })}
                 value={this.state.Destination}
               />
-              <View style={{flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
-              <TouchableOpacity style={{backgroundColor: "rgb(255, 255, 255, 0.2)", padding: 10, marginVertical: 20}} onPress={this.openDate}>
-              <Text>
-                Date
-              </Text>
+              <TouchableOpacity 
+              style={{
+                backgroundColor: "rgb(255, 255, 255, 0.2)",
+                height: 40,
+                marginBottom: 20,
+                paddingHorizontal: 10
+              }} onPress={this._showDateTimePicker}>
+                <Text>Choose Date and Time</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={{backgroundColor: "rgb(255, 255, 255, 0.2)", padding: 10, marginVertical: 20}}>
-              <Text>
-                Time
-              </Text>
-              </TouchableOpacity>
-              </View>
+              <DateTimePicker
+                mode="datetime"
+                isVisible={this.state.isDateTimePickerVisible}
+                onConfirm={this._handleDatePicked}
+                onCancel={this._hideDateTimePicker}
+              />
               <TextInput
                 style={styles.input}
                 placeholder="Price $"
                 placeholderTextColor="rgba(255,255,255,0.😎"
                 autoCorrect={false}
                 ref={"Price"}
-                onChangeText={Price => this.setState({ Price: Price })}
+                onChangeText={Price => this.setState({ Price: parseInt(Price) })}
                 value={this.state.Price}
               />
-              <TouchableOpacity style={styles.buttonContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Spots"
+                placeholderTextColor="rgba(255,255,255,0.😎"
+                autoCorrect={false}
+                ref={"Price"}
+                onChangeText={spots => this.setState({ Spots: parseInt(spots) })}
+                value={this.state.Spots}
+              />
+
+              <TouchableOpacity style={styles.buttonContainer} onPress={this.createPost}>
                 <Text style={styles.buttonText}>Enter</Text>
               </TouchableOpacity>
             </View>
