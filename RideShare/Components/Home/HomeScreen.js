@@ -23,7 +23,7 @@ export default class HomeScreen extends Component {
             <View style={styles.main}>
                 <Header />
                 <SignIn signIn={this.signIn}/>
-                <TouchableOpacity style={styles.signUp} underlayColor="white"><Text>Don't have an account? Sign up here!</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.signUp} underlayColor="white" onPress={() => this.props.navigation.navigate('Sign')}><Text>Don't have an account? Sign up here!</Text></TouchableOpacity>
             </View>
         );
     }

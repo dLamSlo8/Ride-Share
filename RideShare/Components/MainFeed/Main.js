@@ -20,8 +20,7 @@ export default class Main extends Component {
     static navigationOptions = {
         title: "Feed",
         headerStyle: {
-            backgroundColor: "skyblue",
-            paddingLeft:50
+            backgroundColor: "skyblue"
         },
         
         headerTitleStyle: {
@@ -30,8 +29,6 @@ export default class Main extends Component {
             flex: 1,
             flexDirection: "row",
             justifyContent: "center"
-            
-            
         }
     }
 
