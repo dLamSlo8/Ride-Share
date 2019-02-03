@@ -13,6 +13,8 @@ import Header from './Components/Home/Header';
 import SignIn from './Components/Home/SignIn';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import HomeScreen from './Components/Home/HomeScreen';
+import MakePost from './Components/MainFeed/MakePost';
+import Main from './Components/MainFeed/Main';
 export default class App extends Component {
 
   render() {
@@ -23,7 +25,10 @@ export default class App extends Component {
 }
 
 const AppStackNavigator = createStackNavigator({
-  Home: HomeScreen
+  Home: HomeScreen,
+  SignIn: SignIn,
+  Post: MakePost,
+  Feed: Main
 }   );
 
 const AppContainer = createAppContainer(AppStackNavigator);

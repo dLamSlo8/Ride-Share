@@ -15,6 +15,14 @@ import {
 } from "react-native";
 
 export default class SignIn extends Component {
+  constructor(props) {
+      super(props);
+      this.state = {
+          email: "",
+          password: ""
+      };
+  }
+
   render() {
     return (
           <TouchableWithoutFeedback
@@ -32,6 +40,8 @@ export default class SignIn extends Component {
                   placeholder="Emil"
                   placeholderTextColor="rgba(255,255,255,0.😎"
                   autoCorrect={false}
+                  value={this.state.email}
+                  onChangeText={(text) => this.setState({email: text})}
                 />
                 <TextInput
                   style={styles.input}
@@ -39,9 +49,11 @@ export default class SignIn extends Component {
                   placeholderTextColor="rgba(255,255,255,0.😎"
                   secureTextEntry
                   autoCorrect={false}
+                  value={this.state.password}
+                  onChangeText={(text) => this.setState({password: text})}
                 />
                 <TouchableOpacity style={styles.buttonContainer}>
-                  <Text style={styles.buttonText}>SIGN IN</Text>
+                  <Text style={styles.buttonText} onPress={this.props.navigation.navigate("Feed")}>SIGN IN</Text>
                 </TouchableOpacity>
             </View>
 
