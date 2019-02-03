@@ -10,79 +10,134 @@ import {
   SafeAreaView,
   Keyboard,
   TouchableOpacity,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Switch,
+  Alert,
+  AppRegistry
 } from "react-native";
 
 export default class MakePost extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      toggle: false, //make true / false determine which type of ride.
+      Starting: "",
+      Destination: "",
+      Date: "",
+      Time: "",
+      Price: "",
+      formIsEmpty: false
+    };
+  }
+
+  _onPres() {
+    const newState = !this.state.toggle;
+    this.setState({ toggle: newState });
+  }
+
   render() {
+    const { toggle } = this.state;
+    const colorValue = toggle ? "#D3D3D3" : "#888888";
+    const colorValue2 = toggle ? "#888888" : "#D3D3D3";
+
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar barStyle="light-content" />
         <TouchableWithoutFeedback
           style={styles.container}
-          onPress={Keyboard.dismiss}
+          onPres={Keyboard.dismiss}
+          onClick={this.handleIncrement}
         >
-          <View>
-            <Text style={styles.header}>Ride Share</Text>
-            <View style={styles.container}>
-              <Text style={styles.text}>From</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="City"
-                placeholderTextColor="rgba(255,255,255,0.😎"
-                keyboardType="default"
-                returnKeyType="next"
-                autoCorrect={false}
-                onSubmitEditing={() => this.refs.txtPassword.focus()}
+          <View style={styles.logoContainer}>
+            <View style={styles.logoContainer} />
+            <View style={styles.infoContainer}>
+              {/* <Text style={styles.signupHeader}>Ride Form</Text> */}
+              <Image
+                style={{
+                  resizeMode: "contain",
+                  marginLeft: 30,
+                  width: 200,
+                  top: 90
+                }}
+                source={require("../../assets/icon.png")}
               />
+
+              <View style={{ alignItems: "center", flexDirection: "row" }}>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    backgroundColor: colorValue,
+                    padding: 10,
+                    marginVertical: 20,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                  onPress={() => this._onPres()}
+                >
+                  <Text style={styles.buttonText}>Seeking</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    backgroundColor: colorValue2,
+                    padding: 10,
+                    marginVertical: 20,
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
+                  onPress={() => this._onPres()}
+                >
+                  <Text style={styles.buttonText}>Offering</Text>
+                </TouchableOpacity>
+              </View>
 
               <TextInput
                 style={styles.input}
-                placeholder="State"
+                placeholder="Starting"
                 placeholderTextColor="rgba(255,255,255,0.😎"
-                keyboardType="default"
-                returnKeyType="next"
                 autoCorrect={false}
-                onSubmitEditing={() => this.refs.txtPassword.focus()}
-              />
-            </View>
-            <View style={styles.container}>
-              <Text style={styles.text}>To</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="City"
-                placeholderTextColor="rgba(255,255,255,0.😎"
-                keyboardType="default"
-                returnKeyType="next"
-                autoCorrect={false}
-                onSubmitEditing={() => this.refs.txtPassword.focus()}
+                onChangeText={Starting => this.setState({ Starting })}
+                value={this.state.Starting}
               />
               <TextInput
                 style={styles.input}
-                placeholder="State"
+                placeholder="Destination"
                 placeholderTextColor="rgba(255,255,255,0.😎"
-                keyboardType="default"
-                returnKeyType="next"
                 autoCorrect={false}
-                onSubmitEditing={() => this.refs.txtPassword.focus()}
+                onChangeText={Destination => this.setState({ Destination })}
+                value={this.state.Destination}
               />
-            </View>
-
-            <View style={styles.container2}>
-              <Text style={styles.text}>Payment</Text>
+              <TextInput
+                style={styles.input2}
+                placeholder="Date"
+                placeholderTextColor="rgba(255,255,255,0.😎"
+                autoCorrect={false}
+                onChangeText={Date => this.setState({ Date })}
+                value={this.state.Date}
+              />
+              <TextInput
+                style={styles.input2}
+                placeholder="Time"
+                placeholderTextColor="rgba(255,255,255,0.😎"
+                autoCorrect={false}
+                ref={"Time"}
+                onChangeText={Time => this.setState({ Time })}
+                value={this.state.Time}
+              />
               <TextInput
                 style={styles.input}
-                placeholder="$"
+                placeholder="Price $"
                 placeholderTextColor="rgba(255,255,255,0.😎"
-                keyboardType="default"
-                returnKeyType="next"
                 autoCorrect={false}
-                onSubmitEditing={() => this.refs.txtPassword.focus()}
+                ref={"Price"}
+                onChangeText={Price => this.setState({ Price })}
+                value={this.state.Price}
               />
+              <TouchableOpacity style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>Enter</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>Request Ride</Text>
-            </TouchableOpacity>
           </View>
         </TouchableWithoutFeedback>
       </SafeAreaView>
@@ -91,38 +146,63 @@ export default class MakePost extends Component {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    height: 50,
-    backgroundColor: "rgba(255,255,255,0.2)",
-    color: "#FFF",
-    margin: 5,
-    width: 120
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "skyblue"
   },
-  text: {
-    color: "rgb(32, 53, 70)",
-    fontWeight: "bold",
-    fontSize: 18,
+  logoContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    width: 300,
     marginTop: 20
   },
-  container: {
-    marginTop: 20,
-    flex: 1,
-    justifyContent: "center",
-    flexDirection: "row",
-    backgroundColor: "#89cff0",
-    padding: 10
+  logo: {
+    width: 128,
+    height: 56
   },
-  container2: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#89cff0",
-    alignItems: "center",
-    marginBottom: 75
+  infoContainer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 50,
+    padding: 20
+    // backgroundColor: 'red'
+  },
+  input: {
+    height: 40,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    color: "#FFF",
+    marginBottom: 20,
+    paddingHorizontal: 10
+  },
+  input2: {
+    height: 40,
+    backgroundColor: "rgba(255,255,255,0.2)",
+    color: "#FFF",
+    marginBottom: 20,
+    flexDirection: "row",
+    paddingHorizontal: 10
   },
   buttonContainer: {
     backgroundColor: "#f7c744",
-    paddingVertical: 10,
-    marginBottom: 50
+    paddingVertical: 15,
+    marginBottom: 12
+  },
+  buttonContainer2: {
+    flex: 1,
+    backgroundColor: "#D3D3D3",
+    padding: 10,
+    marginBottom: 12,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  buttonContainer3: {
+    backgroundColor: "#888888",
+    padding: 10,
+    marginBottom: 12
   },
   buttonText: {
     textAlign: "center",
@@ -130,11 +210,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18
   },
-  header: {
-    marginTop: 10,
+  signupHeader: {
+    textAlign: "center",
+    color: "black",
     fontSize: 50,
-    color: "white",
-    textAlign: "center"
+    bottom: 30
+  },
+  registerError: {
+    color: "red",
+    textAlign: "center",
+    fontSize: 12,
+    marginTop: 15
   }
 });
 
+AppRegistry.registerComponent("MakePost", () => MakePost);

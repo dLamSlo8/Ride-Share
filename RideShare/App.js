@@ -14,7 +14,7 @@ import SignIn from './Components/Home/SignIn';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import HomeScreen from './Components/Home/HomeScreen';
 import MakePost from './Components/MainFeed/MakePost';
-import Main from './Components/MainFeed/Main';
+import MainFeed from './Components/MainFeed/MainFeed';
 import SignUp from './Components/Home/SignUp';
 import ForgotPassword from './Components/Home/ForgotPassword';
 import Index from './Components/Index';
@@ -33,14 +33,13 @@ const AppStackNavigator = createStackNavigator({
   Post: {
     screen: MakePost},
   Feed: {
-    screen: Main},
+    screen: MainFeed},
   Sign: {
     screen: SignUp},
   ForgotPass: {
-    screen: ForgotPassword},
-  PushTest: {
-    screen: Index
-  }
+    screen: ForgotPassword}
+  
+
 
 },
 {

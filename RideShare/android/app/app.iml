@@ -201,5 +201,8 @@
     <orderEntry type="module" module-name="react-native-gesture-handler" />
     <orderEntry type="module" module-name="react-native-firebase" />
     <orderEntry type="module" module-name="react-native-push-notification" />
+    <orderEntry type="module" module-name="react-native-gesture-handler" />
+    <orderEntry type="module" module-name="react-native-firebase" />
+    <orderEntry type="module" module-name="react-native-push-notification" />
   </component>
 </module>
