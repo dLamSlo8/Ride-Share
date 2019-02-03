@@ -1,2 +1,2 @@
-# Referenced at C:\Users\Lam\Documents\Ride-Share\RideShare\android\app\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:27
+# Referenced at C:\Users\Lam\Documents\Ride-Share\RideShare\android\app\build\intermediates\merged_manifests\debug\processDebugManifest\merged\AndroidManifest.xml:37
 -keep class com.rideshare.MainApplication { <init>(...); }

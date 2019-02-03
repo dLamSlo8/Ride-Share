@@ -74,7 +74,6 @@ android/support/v4/app/NotificationCompat$NotificationVisibility.class
 android/support/v4/app/NotificationCompat$StreamType.class
 android/support/v4/app/ServiceCompat$StopForegroundFlags.class
 android/support/v4/content/PermissionChecker$PermissionResult.class
-android/support/v4/content/WakefulBroadcastReceiver.class
 android/support/v4/content/pm/PermissionInfoCompat$Protection.class
 android/support/v4/content/pm/PermissionInfoCompat$ProtectionFlags.class
 android/support/v4/content/res/FontResourcesParserCompat$FetchStrategy.class
@@ -118,6 +117,7 @@ android/support/v7/widget/LinearLayoutCompat$OrientationMode.class
 androidx/versionedparcelable/NonParcelField.class
 androidx/versionedparcelable/ParcelField.class
 androidx/versionedparcelable/VersionedParcelize.class
+com/dieam/reactnativepushnotification/ReactNativePushNotificationPackage.class
 com/facebook/cache/disk/DefaultDiskStorage$FileType.class
 com/facebook/common/internal/DoNotStrip.class
 com/facebook/common/internal/Objects.class
@@ -187,8 +187,6 @@ com/facebook/react/uimanager/common/UIManagerType.class
 com/facebook/soloader/DoNotOptimize.class
 com/facebook/soloader/SoLoader.class
 com/facebook/widget/text/span/BetterImageSpan$BetterImageSpanAlignment.class
-com/google/android/gms/auth/api/signin/GoogleSignInOptionsExtension$TypeId.class
-com/google/android/gms/common/GoogleCertificates.class
 com/google/android/gms/common/GoogleSignatureVerifier.class
 com/google/android/gms/common/SignInButton$ButtonSize.class
 com/google/android/gms/common/SignInButton$ColorScheme.class
@@ -196,6 +194,7 @@ com/google/android/gms/common/annotation/KeepForSdk.class
 com/google/android/gms/common/annotation/KeepForSdkWithFieldsAndMethods.class
 com/google/android/gms/common/annotation/KeepForSdkWithMembers.class
 com/google/android/gms/common/annotation/KeepName.class
+com/google/android/gms/common/internal/HideFirstParty.class
 com/google/android/gms/common/internal/ShowFirstParty.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$Class.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$Constructor.class
@@ -204,14 +203,12 @@ com/google/android/gms/common/internal/safeparcel/SafeParcelable$Indicator.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$Param.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$Reserved.class
 com/google/android/gms/common/internal/safeparcel/SafeParcelable$VersionField.class
-com/google/android/gms/common/util/CrashUtils$ErrorDialogData.class
 com/google/android/gms/common/util/DynamiteApi.class
 com/google/android/gms/common/util/RetainForClient.class
 com/google/android/gms/common/util/VisibleForTesting.class
-com/google/android/gms/common/zzg.class
+com/google/android/gms/common/zzc.class
+com/google/android/gms/common/zzm.class
 com/google/android/gms/stats/CodePackage.class
-com/google/android/gms/stats/GCoreWakefulBroadcastReceiver.class
-com/google/android/gms/stats/WakeLock.class
 com/google/android/gms/tasks/OnCompleteListener.class
 com/google/android/gms/tasks/OnFailureListener.class
 com/google/common/annotations/Beta.class
@@ -256,12 +253,14 @@ com/google/errorprone/annotations/Var.class
 com/google/errorprone/annotations/concurrent/LazyInit.class
 com/google/errorprone/annotations/concurrent/LockMethod.class
 com/google/errorprone/annotations/concurrent/UnlockMethod.class
+com/google/firebase/annotations/PublicApi.class
 com/google/firebase/firestore/Exclude.class
 com/google/firebase/firestore/IgnoreExtraProperties.class
 com/google/firebase/firestore/PropertyName.class
 com/google/firebase/firestore/ServerTimestamp.class
 com/google/firebase/firestore/ThrowOnExtraProperties.class
 com/google/firebase/firestore/Transaction$Function.class
+com/google/firebase/messaging/RemoteMessage$MessagePriority.class
 com/google/gson/annotations/Expose.class
 com/google/gson/annotations/JsonAdapter.class
 com/google/gson/annotations/SerializedName.class

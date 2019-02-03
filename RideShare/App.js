@@ -17,6 +17,7 @@ import MakePost from './Components/MainFeed/MakePost';
 import Main from './Components/MainFeed/Main';
 import SignUp from './Components/Home/SignUp';
 import ForgotPassword from './Components/Home/ForgotPassword';
+import Index from './Components/Index';
 export default class App extends Component {
 
   render() {
@@ -36,7 +37,10 @@ const AppStackNavigator = createStackNavigator({
   Sign: {
     screen: SignUp},
   ForgotPass: {
-    screen: ForgotPassword}
+    screen: ForgotPassword},
+  PushTest: {
+    screen: Index
+  }
 
 },
 {

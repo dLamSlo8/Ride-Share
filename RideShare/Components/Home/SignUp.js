@@ -13,6 +13,7 @@ import {
   KeyboardAvoidingView,
   Alert
 } from "react-native";
+import firebase from 'react-native-firebase';
 
 export default class SignUp extends Component {
 
@@ -27,8 +28,13 @@ export default class SignUp extends Component {
                   formIsEmpty: false,
                   passwordHasMismatch: false,
                   emailNonEdu: false,
+                  formSameEamil: false,
+                  users: []
                 };
+    this.ref = firebase.firestore().collection('NewUser');
+    this.unsubscribe = null;
   }
+
   onRegisterPress() {
     if((this.state.FirstNameText === "") ||
         (this.state.LastNameText === "") ||
@@ -51,15 +57,33 @@ export default class SignUp extends Component {
       this.setState({emailNonEdu: true})
     }
     else {
-      this.setState({formIsEmpty: false})
-      this.setState({passwordHasMismatch: false})
-      this.setState({emailNonEdu: false})
+        var query = this.ref.where('Email', '==', this.state.EmailText).get()
+          .then(snapshot => {
+            if (snapshot.empty) {
+              this.ref.add({
+                Email: this.state.EmailText,
+                FirstName: this.state.FirstNameText,
+                LastName: this.state.LastNameText,
+                Password: this.state.PasswordText,
+                UserName: this.state.UsernameText
+              })
+            }
+            else {
+                this.setState({
+                  formSameEmail: true
+                });
+            }
+          }).catch(err => {
+            console.log('Error boi');
+          })
+      
     }
   }
   checkError() {
     const formEmptyMessage = <Text>All form fields must be complete</Text>;
     const formPasswordMismatch = <Text>Passwords must match</Text>;
     const formNonEduEmail = <Text>Email must be a valid .edu email</Text>;
+    const formSameEmail = <Text>Email already exists.</Text>;
     const formClear = <Text></Text>;
 
     let formMessage;
@@ -70,6 +94,8 @@ export default class SignUp extends Component {
       formMessage = formPasswordMismatch;
     } else if (this.state.emailNonEdu) {
       formMessage = formNonEduEmail;
+    } else if (this.state.formSameEmail) {
+      formMessage = formSameEmail;
     }
     else {
       formMessage = formClear;
